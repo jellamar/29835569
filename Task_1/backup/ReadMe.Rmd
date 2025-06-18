@@ -1,0 +1,132 @@
+---
+title: "ReadMe Task 1: Baby Names"
+output: html_document
+date: "2025-06-18"
+---
+
+## Loading Necessary Packages, Reading in and Checking Data
+
+As a first step, necessary packages are loaded.
+
+```{r,  echo=FALSE, include=FALSE}
+library(tidyverse)
+library(scales)
+library(dplyr)
+library(kableExtra)
+```
+
+In a next step, data is loaded in from the data folder and stored in variables.
+
+```{r,  echo=TRUE, include=FALSE}
+baby_names <- read_rds("data/US_Baby_names/Baby_Names_By_US_State.rds")
+billboard <- read_rds("data/US_Baby_names/charts.rds")
+hbo_titles <- read_rds("data/US_Baby_names/HBO_titles.rds")
+hbo_credits <- read_rds("data/US_Baby_names/HBO_credits.rds")
+```
+
+
+Consequently, data is being checked for NAs and duplicates.
+
+```{r,  echo=FALSE, include=TRUE}
+source("code/Check_Data.R")
+check_data(baby_names, names)
+check_data(billboard)
+check_data(hbo_titles)
+check_data(hbo_credits)
+```
+
+## Creating an Overview Graph of Number of Babys in Data Set over time
+
+Create a graph showing the total number of babys in the data set over time, to get a feeling for the data. 
+Print that graph and save it so it can be imported in the Rmd file.
+
+```{r,  echo=FALSE}
+source("code/Count_Babynames.R")
+counting <- count_babynames(baby_names)
+source("code/Line_Plot.R")
+count_name_year_plot <- line_plot(counting, "Year", "Total") + scale_y_continuous(labels = comma)
+print(count_name_year_plot)
+ggsave(filename = "results/count_name_year_plot.png", plot = count_name_year_plot, width = 10, height = 6, dpi = 300)
+```
+
+## Mainstream Analysis
+
+Now I carry out a "mainstream analysis" meaning I check how many children had the most popular name of the year, differentiated between male and female names.
+
+```{r,  echo=FALSE}
+source("code/Mainstream_Analysis.R")
+mainstream <- mainstream_analysis(baby_names)
+source("code/Bar_Plot.R")
+mainstream_bar_plot <- bar_plot(mainstream, "Year", "Count", "Gender")
+print(mainstream_bar_plot)
+ggsave(filename = "results/mainstream_bar_plot.png", plot = mainstream_bar_plot, width = 10, height = 6, dpi = 300)
+
+```
+
+## Spearman Correlation Coefficient Analysis
+
+In the next step, I calculate the Spearman correlation coefficient between point in time t0 and t+3 for the years 1986 until 2011. The period had to be limited to 2011 as this is the last year for which the +3 years time lag can be calculated.
+
+```{r,  echo=FALSE}
+source("code/Calculate_Spearman_Correlation.R")
+spearmen <- calculate_spearman_correlation(baby_names)
+source("code/Line_Plot.R")
+spear_results <- readRDS("results/spearman_correlation_results.rds")
+correlation_line_plot <- line_plot(spear_results, "Year", "Correlation")
+print(correlation_line_plot)
+ggsave(filename = "results/correlation_line_plot.png", plot = correlation_line_plot, width = 8, height = 6, dpi = 300)
+```
+
+## Spike Analysis
+
+After that, spikes in years are calculated as large percentage changes between years, indicating a hype in names. The Top 15 most hyped baby names are exported as a table.
+
+
+```{r,  echo=FALSE}
+source("code/Spike_Analysis.R")
+spike_analysis(baby_names)
+top_spikes_table <- read.csv("results/top_spikes.csv")
+knitr::kable(top_spikes_table,
+             caption = "Top 15 Baby Name Spikes by Percentage Increase",
+             col.names = c("Year", "Name", "Gender", "% Increase"),
+             digits = 1) %>%
+    kableExtra::kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+## Pop-Culture Analysis
+
+Thereafter, billboard data is being used to check whether famous baby names relate to music pop-culture. The music_check function organizes the billboard data by top 20 songs per year and checks whether artist or song names relate to baby names. It then assigns two dummy columns to the spikes data frame, telling us whether names appear in top 20 singer or song names within the time frame 1910 until 2014. 
+
+
+```{r,  echo=FALSE}
+source("code/Music_Check.R")
+music_check(billboard)
+
+```
+
+A similar analysis is being done for the movie data stored in hbo_titles and hbo_credits. In a first step, both data frames are being merged based on the id column. Therafter, unnecessary columns are deselected and only films with rating higher than 8.5 and published before 2014 selected. Then, str_detect() is being used to check whether names occur in movie titles, character or actor names, or the movie description. In a last step, a dummy column is being added to provide information if the name is related to a popular movie. 
+
+```{r,  echo=FALSE}
+source("code/Film_Check.R")
+film_check(hbo_titles, hbo_credits)
+```
+
+In a last step, it is being analysed, how many names per gender are related to famous singers, songs or movies. 
+This analysis is insightful to provide recommendations for the toy company, which elements of pop culture to get toy name inspiration from. 
+
+```{r,  echo=FALSE}
+spikes <- readRDS("results/spikes.rds")
+source("code/Name_Pop_Culture_Check.R")
+name_pop_culture_check(spikes)
+```
+
+## Recommendations
+
+In a last step, names from actors or actresses of recently highly rated movies are being isolated to serve as source of inspiration for new toy names. Movie-related names are being chosen as they were found to influence baby name choice more than singer or song names.
+
+```{r}
+hbo_total <- readRDS("results/hbo_total.rds")
+source("code/Hype_Name_Predictor.R")
+hype_name_predictor(hbo_total)
+```
+

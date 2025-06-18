@@ -1,0 +1,223 @@
+---
+# IMPORTANT: Change settings here, but DO NOT change the spacing AT ALL.
+# Remove comments and add values where applicable.
+# The descriptions below should be self-explanatory
+
+title: "Metallica and Coldplay Longevity and Musical Progression in Context of Overall Music Industry Progression"
+#subtitle: "This will appear as Right Header"
+
+documentclass: "elsarticle"
+
+# --------- Thesis title (Optional - set to FALSE by default).
+# You can move the details below around as you please.
+Thesis_FP: FALSE
+# Entry1: "An unbelievable study with a title spanning multiple lines."
+# Entry2: "\\textbf{Some Guy}" # textbf for bold
+# Entry3: "A thesis submitted toward the degree of Doctor of Philosophy"
+# Uni_Logo: Tex/Logo.png # Place a logo in the indicated location (from your root, e.g. defaults to ~/Tex/Logo.png) and uncomment this line. Leave uncommented for no image
+# Logo_width: 0.3 # If using a logo - use this to set width (size) of image
+# Entry4: "Under the supervision of: \\vfill Prof. Joe Smith and Dr. Frank Smith"
+# Entry5: "Stellenbosch University"
+# Entry6: April 2020
+# Entry7:
+# Entry8:
+
+# --------- Front Page
+# Comment: ----- Follow this pattern for up to 5 authors
+AddTitle: TRUE # Use FALSE when submitting to peer reviewed platform. This will remove author names.
+Author1: "Marjella Ernst"  # First Author - note the thanks message displayed as an italic footnote of first page.
+Ref1: "Stellenbosch University, Stellenbosch, South Africa" # First Author's Affiliation
+Email1: "marjella.ernst\\@web.de" # First Author's Email address
+
+# ----- Manage headers and footers:
+#BottomLFooter: $Title$
+#BottomCFooter:
+#TopLHeader: \leftmark # Adds section name at topleft. Remove comment to add it.
+BottomRFooter: "\\footnotesize Page \\thepage" # Add a '#' before this line to remove footer.
+addtoprule: TRUE
+addfootrule: TRUE               # Use if footers added. Add '#' to remove line.
+
+# --------- page margins:
+margin: 2.3 # Sides
+bottom: 2 # bottom
+top: 2.5 # Top
+HardSet_layout: TRUE # Hard-set the spacing of words in your document. This will stop LaTeX squashing text to fit on pages, e.g.
+# This is done by hard-setting the spacing dimensions. Set to FALSE if you want LaTeX to optimize this for your paper.
+
+# --------- Line numbers
+linenumbers: FALSE # Used when submitting to journal
+
+# ---------- References settings:
+# You can download cls format here: https://www.zotero.org/ - simply search for your institution. You can also edit and save cls formats here: https://editor.citationstyles.org/about/
+# Hit download, store it in Tex/ folder, and change reference below - easy.
+bibliography: Tex/ref.bib       # Do not edit: Keep this naming convention and location.
+csl: Tex/harvard-stellenbosch-university.csl # referencing format used.
+# By default, the bibliography only displays the cited references. If you want to change this, you can comment out one of the following:
+#nocite: '@*' # Add all items in bibliography, whether cited or not
+# nocite: |  # add specific references that aren't cited
+#  @grinold2000
+#  @Someoneelse2010
+
+# ---------- General:
+RemovePreprintSubmittedTo: TRUE  # Removes the 'preprint submitted to...' at bottom of titlepage
+Journal: "Journal of Finance"   # Journal that the paper will be submitting to, if RemovePreprintSubmittedTo is set to TRUE.
+toc: FALSE                       # Add a table of contents
+numbersections: TRUE             # Should sections (and thus figures and tables) be numbered?
+fontsize: 11pt                  # Set fontsize
+linestretch: 1.2                # Set distance between lines.
+link-citations: TRUE            # This creates dynamic links to the papers in reference list.
+
+### Adding additional latex packages:
+header-includes:
+    - \usepackage{colortbl}
+    - \usepackage{graphicx}
+    - \usepackage{adjustbox}
+    - \usepackage{framed}         
+    - \usepackage{fancyvrb}        
+    - \DefineVerbatimEnvironment{Shaded}{Verbatim}{frame=single}
+
+output:
+  pdf_document:
+    keep_tex: TRUE
+    template: Tex/TexDefault.txt
+    fig_width: 3.5 # Adjust default figure sizes. This can also be done in the chunks of the text.
+    fig_height: 3.5
+    citation_package: biblatex
+#abstract: |
+  
+---
+
+<!-- First: Set your default preferences for chunk options: -->
+
+<!-- If you want a chunk's code to be printed, set echo = TRUE. message = FALSE stops R printing ugly package loading details in your final paper too. I also suggest setting warning = FALSE and checking for warnings in R, else you might find ugly warnings in your paper. -->
+
+<!-- ############################## -->
+<!-- # Start Writing here: -->
+<!-- ############################## -->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, fig.width = 6, fig.height = 5, fig.pos="H", fig.pos = 'H')
+```
+
+```{r}
+library(tidyverse)
+library(scales)
+library(dplyr)
+library(stringr)
+library(ggplot2)
+library(kableExtra)
+```
+
+
+# Introduction \label{Introduction}
+
+Metallica and Coldplay are bands that are probably known to everyone interested into music. This short report analyses the development of these two bands' musical progression over time, by analysing the success of their songs, as well as changes in their styles. The results are being set into context with overall trends in the music industry in the same period.
+
+# Data Overview
+
+```{r}
+coldplay <- read.csv("data/Coldplay_vs_Metallica/Coldplay.csv")
+metallica <- read.csv("data/Coldplay_vs_Metallica/metallica.csv")
+spotify <- readRDS("data/Coldplay_vs_Metallica/Broader_Spotify_Info.rds")
+billboard_100 <- readRDS("data/Coldplay_vs_Metallica/charts.rds")
+```
+
+In a first step, the data frames for coldplay, metallica, as well as the spotify songs are being cleaned. Thereafter, they are being joined to the final data set called "bands".
+
+```{r}
+source("code/Adjust_Data.R")
+final_bands <- adjust_data(coldplay_data = coldplay, metallica_data = metallica, spotify_data = spotify)
+
+```
+
+# Analysis
+## Average Song Duration (Metallica vs. Coldplay vs. Others)
+
+Next, average duration of songs over time is compared between Metallica, Coldplay and other bands. The results show that Metallica songs are longer than other bands' songs on average. 
+
+
+```{r}
+source("code/Song_Duration_Over_Time.R")
+bands <- readRDS("results/bands.rds")
+song_duration_over_time(bands)
+```
+
+## Top 10 Most Popular Albums (Metallica vs. Coldplay)
+
+Moreover, the top 10 most popular albums of Metallica and Coldplay are being visualized.
+
+```{r, width = 5}
+source("code/Top_Albums.R")
+top_albums <- bind_rows(
+    top_albums(bands, "Coldplay"),
+    top_albums(bands, "Metallica"))
+plot_data <- bands %>%
+    filter(version == "studio") %>%
+    semi_join(top_albums, by = c("artist", "album")) %>%
+    mutate(album = fct_reorder(album, popularity, .fun = median))
+source("code/Top_10_Studio.R")
+top_10_studio(plot_data)
+```
+
+## Average Audio Features (Metallica vs. Coldplay)
+
+Furthermore, average audio features of Metallica and Coldplay songs are analysed and presented in a table.
+
+```{r}
+source("code/Calculate_Band_Stats.R")
+bands <- readRDS("results/bands.rds")
+combined_analysis <- calculate_band_stats(bands, "studio")
+knitr::kable(combined_analysis, 
+             caption = "Comparison of Average Audio Features: Coldplay vs. Metallica",
+             col.names = c("Feature", "Coldplay", "Metallica"),
+             align = c("c", "l", "r")) %>%
+kableExtra::kable_styling("striped", full_width = FALSE)
+```
+
+
+## Average Song Popularity (Metallica vs. Coldplay)
+
+In the next step, the average popularity of songs of Metallica and Coldplay is being compared to get an understanding which of the bands is more popular. The results suggest that Coldplay songs are on average more popular, even though the band Metallica is longer standing and hence more established on the music market than Coldplay.
+
+```{r}
+source("code/Analyse_Avg_Song_Popularity.R")
+coldplay <- readRDS("results/coldplay.rds")
+metallica <- readRDS("results/metallica.rds")
+
+coldplay_popularity <- analyse_avg_song_popularity(coldplay, "Coldplay")
+metallica_popularity <- analyse_avg_song_popularity(metallica, "Metallica")
+combined_popularity <-  bind_rows(coldplay_popularity, metallica_popularity) %>%
+        pivot_longer(cols = c(Coldplay, Metallica),
+                     names_to = "Artist",
+                     values_to = "Popularity") %>%
+        mutate(Year = as.numeric(year))
+    
+source("code/Bar_Plot.R")
+popularity <- bar_plot(combined_popularity, "Year", "Popularity", "Artist")
+saveRDS(popularity, file = "results/combined_data.rds")
+print(popularity)
+    
+```
+
+
+## Overview of Audio Features Over Time (Metallica vs. Coldplay vs. Others)
+
+Lastly, average audio features of Metallica and Coldplay songs are compared to average other songs over time. This allows to trace music trends and evaluate whether the two bands are in line with overall trends, as well as identify unique selling points of the bands. It becomes apparent that Metallica is lowder and more energetic and live than Coldplay and other artists. Coldplay is speechier and more danceable and instrumental on average.
+
+```{r}
+source("code/Build_9_Graphs.R")
+build_9_graphs(bands)
+```
+
+# Conclusion
+
+The analysis has shown that Coldplay songs are on average more popular than Metallica ones. Furthermore, their music differs in the categories under analysis (e.g. energy, valence). Metallica songs tend to be longer than Coldplay song and the average of other interprets songs. The detailed audio feature analysis has shown that both bands have unique selling points, differentiating their music from overall music trends and average other bands.
+
+
+\newpage
+
+# References {-}
+
+<div id="refs"></div>
+
+
