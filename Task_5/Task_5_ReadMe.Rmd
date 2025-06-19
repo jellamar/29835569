@@ -1,0 +1,171 @@
+---
+title: "WHO Health Data Analysis"
+subtitle: "A Presentation by Marjella Ernst"
+author: "Marjella Ernst"
+date: "`r format(Sys.Date(), '%B %Y')`"
+
+output:
+  beamer_presentation:
+    latex_engine: xelatex
+    theme: "Berlin"
+    colortheme: "dove"
+    fonttheme: "structurebold"
+    slide_level: 2
+    toc: false
+    keep_tex: true
+    fig_caption: true
+fontsize: 11pt
+linestretch: 1.2
+numbersections: true
+link-citations: true
+bibliography: Tex/ref.bib
+csl: Tex/harvard-stellenbosch-university.csl
+---
+
+
+
+<!-- First: Set your default preferences for chunk options: -->
+
+<!-- If you want a chunk's code to be printed, set echo = TRUE. message = FALSE stops R printing ugly package loading details in your final paper too. I also suggest setting warning = FALSE and checking for warnings in R, else you might find ugly warnings in your paper. -->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, fig.width = 6, fig.height = 5, fig.pos="H", fig.pos = 'H')
+library(dplyr)
+library(broom)
+library(knitr)
+library(kableExtra)
+library(pander)
+library(memisc)
+#install.packages("modelsummary")
+#install.packages("flextable")
+library(modelsummary)   # wraps broom + supports flextable
+library(flextable)
+library(ggplot2)
+
+Health <- "data/Health/HealthCare.csv" %>% read.csv()
+```
+
+
+<!-- ############################## -->
+<!-- # Start Writing here: -->
+<!-- ############################## -->
+
+# Introduction \label{Introduction}
+
+This presentation explores the relationship of various factors such as:
+- stress
+- physical exercise
+- sleep, and
+
+on health.
+
+# Hypotheses to test
+
+1. sleeping is more important to health than exercise
+2. living a stress free lifestyle has a major impact on health
+
+# Research Question
+
+"Which are the main influencing factors on health and how can we use these insights to improve it?"
+
+# Data 
+
+- The data used for this analysis originates from the **World Health Organization (WHO)**.
+- It includes self-reported indicators on:
+  - Physical activity
+  - Sleep quality
+  - Stress levels
+  - Caloric intake
+
+- The dataset builds the empirical basis for testing the relationship between lifestyle factors and health outcomes
+
+# Methodology
+
+- A multiple linear regression model is used to estimate the effect of:
+  - **Exercise** (physical activity),
+  - **Sleep quality**, and
+  - **Stress level**
+  
+  on the dependent variable **Health** (approximated by excess caloric intake).
+
+
+- The model is specified as:
+\[
+\text{Health}_i = \beta_0 + \beta_1 \cdot \text{Exercise}_i + \beta_2 \cdot \text{Sleep}_i + \beta_3 \cdot \text{Stress}_i + \varepsilon_i
+\]
+
+- In R, the model is estimated as:
+
+```r
+lm(Health ~ Exercise + Sleep + Stress, data = processed)
+```
+
+# Challenge: What is Health?
+
+- For the purpose of this analysis, health is approximated by excess body weight
+  - This serves as a proxy indicator due to data limitations
+  - Other common indicators, such as BMI, are not available in the dataset
+
+
+# Regression Results
+
+```{r results='asis', echo=FALSE}
+source("code/Process_Data.R")
+process_data(Health)
+```
+
+## Interpretation of Results I
+
+- **Exercise** has strong and highly significantly positive effect on health  
+  - Coefficient: 285.77 (***), p < 0.001  
+  - Interpretation: Higher physical activity is strongly associated with better health (less excess weight)
+
+- **Sleep** shows small positive effect, but is not statistically significant
+  - Coefficient: 30.22, p > 0.1  
+  - No strong evidence that sleep quality alone explains variation in health
+
+## Interpretation of Results II
+
+- **Stress** has a small negative effect, but is also not statistically significant
+  - Coefficient: –5.36, p > 0.5  
+  - Cannot conclude that stress significantly affects health in this model
+
+- **Model fit**:
+  - R² = 0.652 → model explains ~65% of the variation in health
+  - Adjusted R² = 0.642 is still high after adjusting for model complexity 
+  - AIC = 1370.7 model complexity vs. fit trade-off
+
+# Limitations
+
+- Health is difficult to measure because it includes multiple dimensions:
+  - Physical aspects (e.g., number of illnesses, fitness)
+  - Mental aspects (e.g., stress resistance, absence of psychological conditions)
+
+- Many influencing factors of health are themselves difficult to observe or quantify:
+  - Genetics, sleep, nutrition
+  - Environmental and external factors
+  - Access to health care
+
+- There is a significant risk of reverse causality:
+  - Poor health can increase stress
+  - Illness may limit exercise
+  - Health problems can disrupt sleep
+
+# Conclusion
+
+- Exercise is found to be clearly statistically significant for health
+
+- Sleep and stress show expected effects but lack statistical significance  
+
+- The model explains a large share of variation in health (~65%)  
+
+- Hower, health is a multifaceted concept, more complex than this model can explain 
+
+- Further research should include:
+  - Better proxies for health (e.g., BMI, blood pressure, clinical diagnoses)
+  - Longitudinal data to address reverse causality
+  - Interaction effects (like stress and sleep)
+
+
+
+

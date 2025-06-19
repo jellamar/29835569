@@ -235,17 +235,6 @@
 \address[Add1]{Stellenbosch University, Stellenbosch, South Africa}
 
 
-\begin{abstract}
-\small{
-Abstract to be written here. The abstract should not be too long and
-should provide the reader with a good understanding what you are writing
-about. Academic papers are not like novels where you keep the reader in
-suspense. To be effective in getting others to read your paper, be as
-open and concise about your findings here as possible. Ideally, upon
-reading your abstract, the reader should feel he / she must read your
-paper in entirety.
-}
-\end{abstract}
 
 \vspace{1cm}
 
@@ -314,15 +303,6 @@ generations.
 In a first step, data is loaded in from the data folder and stored in
 variables.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{baby\_names }\OtherTok{\textless{}{-}} \FunctionTok{readRDS}\NormalTok{(}\StringTok{"data/US\_Baby\_names/Baby\_Names\_By\_US\_State.rds"}\NormalTok{)}
-\NormalTok{billboard }\OtherTok{\textless{}{-}} \FunctionTok{readRDS}\NormalTok{(}\StringTok{"data/US\_Baby\_names/charts.rds"}\NormalTok{)}
-\NormalTok{hbo\_titles }\OtherTok{\textless{}{-}} \FunctionTok{readRDS}\NormalTok{(}\StringTok{"data/US\_Baby\_names/HBO\_titles.rds"}\NormalTok{)}
-\NormalTok{hbo\_credits }\OtherTok{\textless{}{-}} \FunctionTok{readRDS}\NormalTok{(}\StringTok{"data/US\_Baby\_names/HBO\_credits.rds"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
 Consequently, data is being checked for NAs and duplicates.
 
 The baby names dataset comprises US baby names from 1910 to 2014, with
@@ -364,14 +344,14 @@ horizon 1910 until 2011, a Spearmen Rank Correlation is being calculated
 between top 25 names on the country-level in year t0 and t3. The period
 had to be limited to 2011 as this is the last year for which the +3
 years time lag can be calculated. The results of the persistency
-analysis (Figure @ref(fig:correlation)) suggests that persistence of
-names follows a decreasing trend overall, indicating that name
-preferences change faster today than they did in the mid 19th century.
-Comparing the means of Spearmen rank correlation coefficients before and
-after 1990 has confirms the hypothesis that popular names persisted
-slower after 1990. The mean of correlation coefficients before 1990
-amounts to 0.857, while the mean thereafter reduces to 0.766, indicating
-faster-paced name trends.
+analysis (Figure \textcite{ref}(fig:correlation)) suggests that
+persistence of names follows a decreasing trend overall, indicating that
+name preferences change faster today than they did in the mid 19th
+century. Comparing the means of Spearmen rank correlation coefficients
+before and after 1990 has confirms the hypothesis that popular names
+persisted slower after 1990. The mean of correlation coefficients before
+1990 amounts to 0.857, while the mean thereafter reduces to 0.766,
+indicating faster-paced name trends.
 
 \begin{figure}[H]
 
@@ -477,29 +457,29 @@ baby name choice more than singer or song names.
 \toprule
 Names\\
 \midrule
-Andy\\
-Asami\\
-Cailee\\
+Angourie\\
+Annie\\
+Aya\\
+Brene\\
 Chukwudi\\
+\addlinespace
+Danielle\\
+Evan\\
 Guy\\
+James\\
+Janina\\
 \addlinespace
-Juan\\
-Junya\\
-Kabir\\
-Konomi\\
-Lochlyn\\
+Joe\\
+Kenjiro\\
+Kentaro\\
+Marc\\
+Mark\\
 \addlinespace
-Lydia\\
-Manaka\\
-Mitsuki\\
-Olly\\
-Peter\\
-\addlinespace
+Martha\\
+Neal\\
+Nobuyuki\\
 Ramon\\
-Reiji\\
-Rikako\\
-Robert\\
-Yuko\\
+Yuma\\
 \bottomrule
 \end{longtable}
 

@@ -1,0 +1,466 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  11pt,
+  ignorenonframetext,
+]{beamer}
+\usepackage{pgfpages}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}{: }
+\setbeamercolor{caption name}{fg=normal text.fg}
+\beamertemplatenavigationsymbolsempty
+% Prevent slide breaks in the middle of a paragraph
+\widowpenalties 1 10000
+\raggedbottom
+\setbeamertemplate{part page}{
+  \centering
+  \begin{beamercolorbox}[sep=16pt,center]{part title}
+    \usebeamerfont{part title}\insertpart\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{section page}{
+  \centering
+  \begin{beamercolorbox}[sep=12pt,center]{part title}
+    \usebeamerfont{section title}\insertsection\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{subsection page}{
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center]{part title}
+    \usebeamerfont{subsection title}\insertsubsection\par
+  \end{beamercolorbox}
+}
+\AtBeginPart{
+  \frame{\partpage}
+}
+\AtBeginSection{
+  \ifbibliography
+  \else
+    \frame{\sectionpage}
+  \fi
+}
+\AtBeginSubsection{
+  \frame{\subsectionpage}
+}
+\usepackage{amsmath,amssymb}
+\usepackage{setspace}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\usetheme[]{Berlin}
+\usecolortheme{dove}
+\usefonttheme{structurebold}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\newif\ifbibliography
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\usepackage{tabularray}
+\usepackage[normalem]{ulem}
+\usepackage{graphicx}
+\usepackage{rotating}
+\UseTblrLibrary{booktabs}
+\UseTblrLibrary{siunitx}
+\NewTableCommand{\tinytableDefineColor}[3]{\definecolor{#1}{#2}{#3}}
+\newcommand{\tinytableTabularrayUnderline}[1]{\underline{#1}}
+\newcommand{\tinytableTabularrayStrikeout}[1]{\sout{#1}}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={WHO Health Data Analysis},
+  pdfauthor={Marjella Ernst},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{WHO Health Data Analysis}
+\subtitle{A Presentation by Marjella Ernst}
+\author{Marjella Ernst}
+\date{June 2025}
+
+\begin{document}
+\frame{\titlepage}
+
+\setstretch{1.2}
+\begin{frame}
+\end{frame}
+
+\section{\texorpdfstring{Introduction
+\label{Introduction}}{Introduction }}\label{introduction}
+
+\begin{frame}{Introduction \label{Introduction}}
+This presentation explores the relationship of various factors such as:
+- stress - physical exercise - sleep, and
+
+on health.
+\end{frame}
+
+\section{Hypotheses to test}\label{hypotheses-to-test}
+
+\begin{frame}{Hypotheses to test}
+\begin{enumerate}
+\tightlist
+\item
+  sleeping is more important to health than exercise
+\item
+  living a stress free lifestyle has a major impact on health
+\end{enumerate}
+\end{frame}
+
+\section{Research Question}\label{research-question}
+
+\begin{frame}{Research Question}
+``Which are the main influencing factors on health and how can we use
+these insights to improve it?''
+\end{frame}
+
+\section{Data}\label{data}
+
+\begin{frame}{Data}
+\begin{itemize}
+\tightlist
+\item
+  The data used for this analysis originates from the \textbf{World
+  Health Organization (WHO)}.
+\item
+  It includes self-reported indicators on:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Physical activity
+  \item
+    Sleep quality
+  \item
+    Stress levels
+  \item
+    Caloric intake
+  \end{itemize}
+\item
+  The dataset builds the empirical basis for testing the relationship
+  between lifestyle factors and health outcomes
+\end{itemize}
+\end{frame}
+
+\section{Methodology}\label{methodology}
+
+\begin{frame}[fragile]{Methodology}
+\begin{itemize}
+\item
+  A multiple linear regression model is used to estimate the effect of:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Exercise} (physical activity),
+  \item
+    \textbf{Sleep quality}, and
+  \item
+    \textbf{Stress level}
+  \end{itemize}
+
+  on the dependent variable \textbf{Health} (approximated by excess
+  caloric intake).
+\item
+  The model is specified as: \[
+  \text{Health}_i = \beta_0 + \beta_1 \cdot \text{Exercise}_i + \beta_2 \cdot \text{Sleep}_i + \beta_3 \cdot \text{Stress}_i + \varepsilon_i
+  \]
+\item
+  In R, the model is estimated as:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{lm}\NormalTok{(Health }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Exercise }\SpecialCharTok{+}\NormalTok{ Sleep }\SpecialCharTok{+}\NormalTok{ Stress, }\AttributeTok{data =}\NormalTok{ processed)}
+\end{Highlighting}
+\end{Shaded}
+\end{frame}
+
+\section{Challenge: What is Health?}\label{challenge-what-is-health}
+
+\begin{frame}{Challenge: What is Health?}
+\begin{itemize}
+\tightlist
+\item
+  For the purpose of this analysis, health is approximated by excess
+  body weight
+
+  \begin{itemize}
+  \tightlist
+  \item
+    This serves as a proxy indicator due to data limitations
+  \item
+    Other common indicators, such as BMI, are not available in the
+    dataset
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\section{Regression Results}\label{regression-results}
+
+\begin{frame}{Regression Results}
+\begin{minipage}{\linewidth}
+\scriptsize
+\begin{table}
+\centering
+\begin{talltblr}[         %% tabularray outer open
+caption={Regression Results: Health \textasciitilde{} Exercise + Sleep + Stress},
+note{}={+ p \num{< 0.1}, * p \num{< 0.05}, ** p \num{< 0.01}, *** p \num{< 0.001}},
+]                     %% tabularray outer close
+{                     %% tabularray inner open
+colspec={Q[]Q[]},
+column{2}={}{halign=c,},
+column{1}={}{halign=l,},
+hline{10}={1,2}{solid, black, 0.05em},
+}                     %% tabularray inner close
+\toprule
+& (1) \\ \midrule %% TinyTableHeader
+(Intercept) & \num{246.148}** \\
+& (\num{87.845}) \\
+Exercise & \num{285.774}*** \\
+& (\num{21.394}) \\
+Sleep & \num{30.220} \\
+& (\num{20.625}) \\
+Stress & \num{-5.357} \\
+& (\num{8.851}) \\
+Num.Obs. & \num{100} \\
+R2 & \num{0.652} \\
+R2 Adj. & \num{0.642} \\
+AIC & \num{1370.7} \\
+BIC & \num{1383.7} \\
+Log.Lik. & \num{-680.331} \\
+RMSE & \num{217.97} \\
+\bottomrule
+\end{talltblr}
+\end{table}
+\end{minipage}
+\end{frame}
+
+\begin{frame}{Interpretation of Results I}
+\phantomsection\label{interpretation-of-results-i}
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Exercise} has strong and highly significantly positive effect
+  on health
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Coefficient: 285.77 (***), p \textless{} 0.001\\
+  \item
+    Interpretation: Higher physical activity is strongly associated with
+    better health (less excess weight)
+  \end{itemize}
+\item
+  \textbf{Sleep} shows small positive effect, but is not statistically
+  significant
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Coefficient: 30.22, p \textgreater{} 0.1\\
+  \item
+    No strong evidence that sleep quality alone explains variation in
+    health
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Interpretation of Results II}
+\phantomsection\label{interpretation-of-results-ii}
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Stress} has a small negative effect, but is also not
+  statistically significant
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Coefficient: --5.36, p \textgreater{} 0.5\\
+  \item
+    Cannot conclude that stress significantly affects health in this
+    model
+  \end{itemize}
+\item
+  \textbf{Model fit}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    R² = 0.652 → model explains \textasciitilde65\% of the variation in
+    health
+  \item
+    Adjusted R² = 0.642 is still high after adjusting for model
+    complexity
+  \item
+    AIC = 1370.7 model complexity vs.~fit trade-off
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\section{Limitations}\label{limitations}
+
+\begin{frame}{Limitations}
+\begin{itemize}
+\tightlist
+\item
+  Health is difficult to measure because it includes multiple
+  dimensions:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Physical aspects (e.g., number of illnesses, fitness)
+  \item
+    Mental aspects (e.g., stress resistance, absence of psychological
+    conditions)
+  \end{itemize}
+\item
+  Many influencing factors of health are themselves difficult to observe
+  or quantify:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Genetics, sleep, nutrition
+  \item
+    Environmental and external factors
+  \item
+    Access to health care
+  \end{itemize}
+\item
+  There is a significant risk of reverse causality:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Poor health can increase stress
+  \item
+    Illness may limit exercise
+  \item
+    Health problems can disrupt sleep
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\section{Conclusion}\label{conclusion}
+
+\begin{frame}{Conclusion}
+\begin{itemize}
+\item
+  Exercise is found to be clearly statistically significant for health
+\item
+  Sleep and stress show expected effects but lack statistical
+  significance
+\item
+  The model explains a large share of variation in health
+  (\textasciitilde65\%)
+\item
+  Hower, health is a multifaceted concept, more complex than this model
+  can explain
+\item
+  Further research should include:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Better proxies for health (e.g., BMI, blood pressure, clinical
+    diagnoses)
+  \item
+    Longitudinal data to address reverse causality
+  \item
+    Interaction effects (like stress and sleep)
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\end{document}

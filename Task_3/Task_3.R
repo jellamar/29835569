@@ -41,7 +41,7 @@ length_development <- region_data %>% group_by(release_year) %>%
 
 source("code/Line_Plot.R")
 length_over_time <- line_plot(length_development, "release_year", "mean_duration")
-saveRDS(length_over_time.Rds)
+saveRDS(length_over_time.rds)
 
 # sentiment analysis descriptions
 

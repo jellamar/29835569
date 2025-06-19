@@ -148,7 +148,7 @@ counting <- count_babynames(baby_names)
 source("code/Line_Plot.R")
 count_name_year_plot <- line_plot(counting, "Year", "Total") + scale_y_continuous(labels = comma)
 print(count_name_year_plot)
-#ggsave(filename = "results/count_name_year_plot.png", plot = count_name_year_plot, width = 10, height = 6, dpi = 300)
+ggsave(filename = "results/count_name_year_plot.png", plot = count_name_year_plot, width = 10, height = 6, dpi = 300)
 ```
 
 ## Analysis Steps
@@ -165,14 +165,14 @@ mainstream <- mainstream_analysis(baby_names)
 source("code/Bar_Plot.R")
 mainstream_bar_plot <- bar_plot(mainstream, "Year", "Count", "Gender")
 print(mainstream_bar_plot)
-#ggsave(filename = "results/mainstream_bar_plot.png", plot = mainstream_bar_plot, width = 10, height = 6, dpi = 300)
+ggsave(filename = "results/mainstream_bar_plot.png", plot = mainstream_bar_plot, width = 10, height = 6, dpi = 300)
 #knitr::include_graphics("results/mainstream_bar_plot.png")
 ```
 
 
 ## Persistence Analysis
 
-To analyse whether the persistency of names has changed over the time horizon 1910 until 2011, a Spearmen Rank Correlation is being calculated between top 25 names on the country-level in year t0 and t3. The period had to be limited to 2011 as this is the last year for which the +3 years time lag can be calculated. The results of the persistency analysis (Figure \@ref(fig:correlation)) suggests that persistence of names follows a decreasing trend overall, indicating that name preferences change faster today than they did in the mid 19th century. Comparing the means of Spearmen rank correlation coefficients before and after 1990 has confirms the hypothesis that popular names persisted slower after 1990. The mean of correlation coefficients before 1990 amounts to 0.857, while the mean thereafter reduces to 0.766, indicating faster-paced name trends. 
+To analyse whether the persistency of names has changed over the time horizon 1910 until 2011, a Spearmen Rank Correlation is being calculated between top 25 names on the country-level in year t0 and t3. The period had to be limited to 2011 as this is the last year for which the +3 years time lag can be calculated. The results of the persistency analysis (Figure Correlation) suggests that persistence of names follows a decreasing trend overall, indicating that name preferences change faster today than they did in the mid 19th century. Comparing the means of Spearmen rank correlation coefficients before and after 1990 has confirms the hypothesis that popular names persisted slower after 1990. The mean of correlation coefficients before 1990 amounts to 0.857, while the mean thereafter reduces to 0.766, indicating faster-paced name trends. 
 
 
 ```{r correlation-trend, fig.cap="Correlation Trend Over Time (1910–2011)", echo=FALSE, fig.align='center', fig.pos='H', label="fig-correlation", message=FALSE, warning=FALSE, fig.width=6, fig.height=6}

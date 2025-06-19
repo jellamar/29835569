@@ -1,0 +1,164 @@
+---
+# IMPORTANT: Change settings here, but DO NOT change the spacing AT ALL.
+# Remove comments and add values where applicable.
+# The descriptions below should be self-explanatory
+
+title: "WHO Health Presentation Notes"
+#subtitle: "This will appear as Right Header"
+
+documentclass: "elsarticle"
+
+# --------- Thesis title (Optional - set to FALSE by default).
+# You can move the details below around as you please.
+Thesis_FP: FALSE
+# Entry1: "An unbelievable study with a title spanning multiple lines."
+# Entry2: "\\textbf{Some Guy}" # textbf for bold
+# Entry3: "A thesis submitted toward the degree of Doctor of Philosophy"
+# Uni_Logo: Tex/Logo.png # Place a logo in the indicated location (from your root, e.g. defaults to ~/Tex/Logo.png) and uncomment this line. Leave uncommented for no image
+# Logo_width: 0.3 # If using a logo - use this to set width (size) of image
+# Entry4: "Under the supervision of: \\vfill Prof. Joe Smith and Dr. Frank Smith"
+# Entry5: "Stellenbosch University"
+# Entry6: April 2020
+# Entry7:
+# Entry8:
+
+# --------- Front Page
+# Comment: ----- Follow this pattern for up to 5 authors
+AddTitle: TRUE # Use FALSE when submitting to peer reviewed platform. This will remove author names.
+Author1: "Marjella Ernst"  # First Author - note the thanks message displayed as an italic footnote of first page.
+Ref1: "Stellenbosch University, Stellenbosch, South Africa" # First Author's Affiliation
+Email1: "29835569\\@sun.ac.za" # First Author's Email address
+# 
+# Author2: "John Smith"
+# Ref2: "Some other Institution, Cape Town, South Africa"
+# Email2: "John\\@gmail.com"
+# CommonAffiliation_12: TRUE # If Author 1 and 2 have a common affiliation. Works with _13, _23, etc.
+# 
+# Author3: "John Doe"
+# Email3: "Joe\\@gmail.com"
+# 
+# CorrespAuthor_1: TRUE  # If corresponding author is author 3, e.g., use CorrespAuthor_3: TRUE
+# 
+# # Comment out below to remove both. JEL Codes only given if keywords also given.
+# keywords: "Multivariate GARCH \\sep Kalman Filter \\sep Copula" # Use \\sep to separate
+# JELCodes: "L250 \\sep L100"
+
+# ----- Manage headers and footers:
+#BottomLFooter: $Title$
+#BottomCFooter:
+#TopLHeader: \leftmark # Adds section name at topleft. Remove comment to add it.
+BottomRFooter: "\\footnotesize Page \\thepage" # Add a '#' before this line to remove footer.
+addtoprule: TRUE
+addfootrule: TRUE               # Use if footers added. Add '#' to remove line.
+
+# --------- page margins:
+margin: 2.3 # Sides
+bottom: 2 # bottom
+top: 2.5 # Top
+HardSet_layout: TRUE # Hard-set the spacing of words in your document. This will stop LaTeX squashing text to fit on pages, e.g.
+# This is done by hard-setting the spacing dimensions. Set to FALSE if you want LaTeX to optimize this for your paper.
+
+# --------- Line numbers
+linenumbers: FALSE # Used when submitting to journal
+
+# ---------- References settings:
+# You can download cls format here: https://www.zotero.org/ - simply search for your institution. You can also edit and save cls formats here: https://editor.citationstyles.org/about/
+# Hit download, store it in Tex/ folder, and change reference below - easy.
+bibliography: Tex/ref.bib       # Do not edit: Keep this naming convention and location.
+csl: Tex/harvard-stellenbosch-university.csl # referencing format used.
+# By default, the bibliography only displays the cited references. If you want to change this, you can comment out one of the following:
+#nocite: '@*' # Add all items in bibliography, whether cited or not
+# nocite: |  # add specific references that aren't cited
+#  @grinold2000
+#  @Someoneelse2010
+
+# ---------- General:
+RemovePreprintSubmittedTo: TRUE  # Removes the 'preprint submitted to...' at bottom of titlepage
+#Journal: "Journal of Finance"   # Journal that the paper will be submitting to, if RemovePreprintSubmittedTo is set to TRUE.
+toc: FALSE                       # Add a table of contents
+numbersections: TRUE             # Should sections (and thus figures and tables) be numbered?
+fontsize: 11pt                  # Set fontsize
+linestretch: 1.2                # Set distance between lines.
+link-citations: TRUE            # This creates dynamic links to the papers in reference list.
+
+### Adding additional latex packages:
+# header-includes:
+#    - \usepackage{colortbl} # Add additional packages here.
+
+output:
+    pdf_document:
+    keep_tex: TRUE
+    template: Tex/TexDefault.txt
+    fig_width: 3.5 # Adjust default figure sizes. This can also be done in the chunks of the text.
+    fig_height: 3.5
+#abstract: |
+ # Abstract to be written here. The abstract should not be too long and should provide the reader with a good understanding what you are writing about. Academic papers are not like novels where you keep the reader in suspense. To be effective in getting others to read your paper, be as open and concise about your findings here as possible. Ideally, upon reading your abstract, the reader should feel he / she must read your paper in entirety.
+---
+
+<!-- First: Set your default preferences for chunk options: -->
+
+<!-- If you want a chunk's code to be printed, set echo = TRUE. message = FALSE stops R printing ugly package loading details in your final paper too. I also suggest setting warning = FALSE and checking for warnings in R, else you might find ugly warnings in your paper. -->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, fig.width = 6, fig.height = 5, fig.pos="H", fig.pos = 'H')
+library(dplyr)
+library(broom)
+library(knitr)
+library(kableExtra)
+library(pander)
+library(memisc)
+#install.packages("modelsummary")
+#install.packages("flextable")
+library(modelsummary)   # wraps broom + supports flextable
+library(flextable)
+
+Health <- "data/Health/HealthCare.csv" %>% read.csv()
+```
+
+
+<!-- ############################## -->
+<!-- # Start Writing here: -->
+<!-- ############################## -->
+
+# Introduction
+
+This presentation presents the results of a data analysis of WHO health data to explore the impact of stress, physical exercise, and sleep on health.
+
+In the course of the analysis, two hypotheses were tested 
+1. sleeping is more important to health than exercise
+2. living a stress free lifestyle has a major impact on health
+
+# Research Question
+The underlying research question of this analysis was:
+"Which are the main influencing factors on health and how can we use these insights to improve it?"
+
+# Data 
+The data used for this analysis is WHO data on health, comprising data on individuals ages, weight, sleep, exercise, stress levels, amongst others. 
+
+# Methodology
+The analysis consisted of a regression with health as dependent variable, sleep, excercise and stress as independent variables.
+
+# Challenge: What is health?
+A challenge I encountered was to determine which variable is used for health. It is generally challenging to measure health, as it consists of many factors. For the purpose of this analysis, health will be explained by excess body weight.
+This simplification is being made in the absence of other health indicators such as BMI.
+
+# Results
+The regression results suggest that Exercise has a statistically significant positive relationship on health, while for Sleep and Stress no statistically significant effects were found. 
+
+```{r results='asis', echo=FALSE}
+source("code/Process_Data_1.R")
+process_data(Health)
+```
+
+# Limitations
+In general, it is difficult to measure health as it is expressed in many different aspects, which are difficult to measure. For example, health has physical aspects such as number of illnesses over time or fitness, but also mental aspects such as stress resistency or absence of psychological conditions. 
+
+Furthermore, the input factors of health are difficult to measure, as factors like genetics, sleep, nutrition, external factors, but also access to health care might influence it. 
+
+Moreover, there is a substantial risk of reverse causality, as poor health might also induce stress, limit exercises and cause sleepless nights. 
+
+
+# Conclusion
+This presentation discussed the effects of exercises, sleep and stress on health by means of a simple linear regression analysis. The results suggest that only physical exercise has a statistically significant effect on health. Therefore, both hypotheses need to be rejected. Major limitations of this analysis have been mentioned. I thank you for your attention and am looking forward to hearing your feedback. 
+
+
