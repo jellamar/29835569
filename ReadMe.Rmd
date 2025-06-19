@@ -30,6 +30,7 @@ library(ggplot2)
 library(ggrepel)
 library(modelsummary) 
 library(broom)
+library(knitr)
 ```
 
 ## Accessing the Code
@@ -464,9 +465,10 @@ process_data(Health)
 #processed_health <- readRDS("results/processed_data.rds")
 ```
 
+
 ## Limitations
 
-In general, it is difficult to measure health as it is expressed in many different aspects. It includes physical aspects such as sick days or physical fitness, but also mental dimensions such as resilience to stress or the absence of psychological issues. Furthermore, the input factors of health are difficult to measure, as factors like genetics, sleep, nutrition, external factors, but also access to health care might influence it. Therefore it is difficult to capture health relationships accurately through data. On top of that, there is a substantial risk of reverse causality, as poor health might itself lead to higher stress levels, reduced physical activity, or sleep problems. This makes it harder to clearly separate causes from effects when interpreting the results.
+In general, it is difficult to measure health as it is expressed in many different aspects. It includes physical aspects such as sick days or physical fitness, but also mental dimensions such as resilience to stress or the absence of psychological issues. Furthermore, the input factors of health are difficult to measure, as factors like genetics, sleep, nutrition, external factors, but also access to health care might influence it. Therefore it is difficult to capture health relationships accurately through data. On top of that, there is a substantial risk of reverse causality, as poor health might itself lead to higher stress levels, reduced physical activity, or sleep problems.
 
 
 ## Conclusion

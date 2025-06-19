@@ -27,6 +27,7 @@ library(ggplot2)
 library(ggrepel)
 library(modelsummary) 
 library(broom)
+library(knitr)
 ```
 
 ## Accessing the Code
@@ -1014,166 +1015,14 @@ The regression results suggest that Exercise has a statistically
 significant positive relationship on health, while for Sleep and Stress
 no statistically significant effects were found.
 
-<!-- preamble start -->
+| Variable    | Estimate | Std. Error |     t | p-value |
+|:------------|---------:|-----------:|------:|--------:|
+| (Intercept) |   246.15 |      87.84 |  2.80 |    0.01 |
+| Exercise    |   285.77 |      21.39 | 13.36 |    0.00 |
+| Sleep       |    30.22 |      20.63 |  1.47 |    0.15 |
+| Stress      |    -5.36 |       8.85 | -0.61 |    0.55 |
 
-    <script>
-
-      function styleCell_ruod9l5e9yxldb29aelr(i, j, css_id) {
-          var table = document.getElementById("tinytable_ruod9l5e9yxldb29aelr");
-          var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
-          if (cell) {
-              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
-              cell.classList.add(css_id);
-          } else {
-              console.warn(`Cell at (${i}, ${j}) not found.`);
-          }
-      }
-      function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_ruod9l5e9yxldb29aelr');
-        var newRow = table.insertRow(i);
-        var newCell = newRow.insertCell(0);
-        newCell.setAttribute("colspan", colspan);
-        // newCell.innerText = content;
-        // this may be unsafe, but innerText does not interpret <br>
-        newCell.innerHTML = content;
-      }
-      function spanCell_ruod9l5e9yxldb29aelr(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_ruod9l5e9yxldb29aelr");
-        const targetRow = table.rows[i];
-        const targetCell = targetRow.cells[j];
-        for (let r = 0; r < rowspan; r++) {
-          // Only start deleting cells to the right for the first row (r == 0)
-          if (r === 0) {
-            // Delete cells to the right of the target cell in the first row
-            for (let c = colspan - 1; c > 0; c--) {
-              if (table.rows[i + r].cells[j + c]) {
-                table.rows[i + r].deleteCell(j + c);
-              }
-            }
-          }
-          // For rows below the first, delete starting from the target column
-          if (r > 0) {
-            for (let c = colspan - 1; c >= 0; c--) {
-              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
-                table.rows[i + r].deleteCell(j);
-              }
-            }
-          }
-        }
-        // Set rowspan and colspan of the target cell
-        targetCell.rowSpan = rowspan;
-        targetCell.colSpan = colspan;
-      }
-      // tinytable span after
-      window.addEventListener('load', function () {
-          var cellsToStyle = [
-            // tinytable style arrays after
-          { positions: [ { i: 15, j: 1 },  ], css_id: 'tinytable_css_2zfnbn4ohr8ptxyuyjgv',}, 
-          { positions: [ { i: 8, j: 1 },  ], css_id: 'tinytable_css_z6th7jjp6qya48s0bibh',}, 
-          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 12, j: 1 }, { i: 9, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 }, { i: 13, j: 1 }, { i: 14, j: 1 },  ], css_id: 'tinytable_css_2mewtent57m4ffozk24c',}, 
-          { positions: [ { i: 0, j: 1 },  ], css_id: 'tinytable_css_uqvbs7b7ykpnlend8xno',}, 
-          { positions: [ { i: 15, j: 0 },  ], css_id: 'tinytable_css_8kz13s835lb9f55cmk1s',}, 
-          { positions: [ { i: 8, j: 0 },  ], css_id: 'tinytable_css_3thiv6ize5tknwf9xm2i',}, 
-          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 12, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 13, j: 0 }, { i: 14, j: 0 },  ], css_id: 'tinytable_css_b9e92kq1xz1kwcv9fr60',}, 
-          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_kk4mt3d7wcf0dp98l1fr',}, 
-          ];
-
-          // Loop over the arrays to style the cells
-          cellsToStyle.forEach(function (group) {
-              group.positions.forEach(function (cell) {
-                  styleCell_ruod9l5e9yxldb29aelr(cell.i, cell.j, group.css_id);
-              });
-          });
-      });
-    </script>
-
-    <style>
-      /* tinytable css entries after */
-      .table td.tinytable_css_2zfnbn4ohr8ptxyuyjgv, .table th.tinytable_css_2zfnbn4ohr8ptxyuyjgv { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_z6th7jjp6qya48s0bibh, .table th.tinytable_css_z6th7jjp6qya48s0bibh { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_2mewtent57m4ffozk24c, .table th.tinytable_css_2mewtent57m4ffozk24c { text-align: center; }
-      .table td.tinytable_css_uqvbs7b7ykpnlend8xno, .table th.tinytable_css_uqvbs7b7ykpnlend8xno { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_8kz13s835lb9f55cmk1s, .table th.tinytable_css_8kz13s835lb9f55cmk1s { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_3thiv6ize5tknwf9xm2i, .table th.tinytable_css_3thiv6ize5tknwf9xm2i { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_b9e92kq1xz1kwcv9fr60, .table th.tinytable_css_b9e92kq1xz1kwcv9fr60 { text-align: left; }
-      .table td.tinytable_css_kk4mt3d7wcf0dp98l1fr, .table th.tinytable_css_kk4mt3d7wcf0dp98l1fr { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-    </style>
-    <div class="container">
-      <table class="table table-borderless" id="tinytable_ruod9l5e9yxldb29aelr" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
-        <thead>
-        <caption>Table 1 – Regression: Health on Exercise, Sleep, Stress</caption>
-              <tr>
-                <th scope="col"> </th>
-                <th scope="col">(1)</th>
-              </tr>
-        </thead>
-        <tfoot><tr><td colspan='2'>+ p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</td></tr></tfoot>
-        <tbody>
-                <tr>
-                  <td>(Intercept)</td>
-                  <td>246.148**</td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td>(87.845)</td>
-                </tr>
-                <tr>
-                  <td>Exercise</td>
-                  <td>285.774***</td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td>(21.394)</td>
-                </tr>
-                <tr>
-                  <td>Sleep</td>
-                  <td>30.220</td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td>(20.625)</td>
-                </tr>
-                <tr>
-                  <td>Stress</td>
-                  <td>−5.357</td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td>(8.851)</td>
-                </tr>
-                <tr>
-                  <td>Num.Obs.</td>
-                  <td>100</td>
-                </tr>
-                <tr>
-                  <td>R2</td>
-                  <td>0.652</td>
-                </tr>
-                <tr>
-                  <td>R2 Adj.</td>
-                  <td>0.642</td>
-                </tr>
-                <tr>
-                  <td>AIC</td>
-                  <td>1370.7</td>
-                </tr>
-                <tr>
-                  <td>BIC</td>
-                  <td>1383.7</td>
-                </tr>
-                <tr>
-                  <td>Log.Lik.</td>
-                  <td>−680.331</td>
-                </tr>
-                <tr>
-                  <td>RMSE</td>
-                  <td>217.97</td>
-                </tr>
-        </tbody>
-      </table>
-    </div>
-
-<!-- hack to avoid NA insertion in last line -->
+Table 1 – Regression: Health ~ Exercise + Sleep + Stress
 
 ## Limitations
 
@@ -1186,9 +1035,7 @@ sleep, nutrition, external factors, but also access to health care might
 influence it. Therefore it is difficult to capture health relationships
 accurately through data. On top of that, there is a substantial risk of
 reverse causality, as poor health might itself lead to higher stress
-levels, reduced physical activity, or sleep problems. This makes it
-harder to clearly separate causes from effects when interpreting the
-results.
+levels, reduced physical activity, or sleep problems.
 
 ## Conclusion
 

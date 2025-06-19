@@ -1,7 +1,6 @@
 process_data <- function(data) {
     processed <- data %>%
-  mutate(
-    Exercise = case_when(
+  mutate(Exercise = case_when(
       Physical.Activity.Level == "Sedentary" ~ 1,
       Physical.Activity.Level == "Lightly Active" ~ 2,
       Physical.Activity.Level == "Moderately Active" ~ 3,
@@ -21,11 +20,14 @@ process_data <- function(data) {
     saveRDS(processed, "results/processed_data.rds")
     saveRDS(broom::tidy(model), "results/regression_summary.rds")
 
-    html_tab <- modelsummary(
-        model, statistic = "({std.error})",
-        stars     = TRUE,
-        output    = "html",
-        title     = "Table 1 – Regression: Health on Exercise, Sleep, Stress")
+    coef_tab <- broom::tidy(model) |>
+        mutate(across(where(is.numeric), ~round(.x, 2))) |>
+        select(term, estimate, std.error, statistic, p.value)
 
-    cat(as.character(html_tab))
+    kable(coef_tab,
+        format = "markdown", digits = 2,
+        caption = "Table 1 – Regression: Health ~ Exercise + Sleep + Stress",
+        col.names = c("Variable", "Estimate", "Std. Error", "t", "p-value"))
+
 }
+

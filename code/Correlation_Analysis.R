@@ -23,11 +23,10 @@ plot <- ggplot(consumer_analysis, aes(x = Avg_log10_GDP, y = Consumer_Share)) +
     ) +
     scale_color_viridis_c() +
     labs(
-        title = "No Significant GDP-Consumer Industry Relationship",
+        title = "GDP-Consumer Industry Relationship",
         subtitle = "Filtered only countries with ≥3 billionaires",
         x = "Log10(GDP)",
-        y = "Consumer Industry Share"
-    ) +
+        y = "Consumer Industry Share") +
     theme_minimal()
 
 print(plot)
